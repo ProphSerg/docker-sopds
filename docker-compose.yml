@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: ./app
+#      dockerfile: ./app/Dockerfile
+#    container_name: sopds
+    environment:
+      - MYSQL_DB=sopds
+      - MYSQL_HOST=db
+      - MYSQL_USER=sopds
+      - MYSQL_PASSWORD=sopds
+      - MYSQL_ROOT_PASSWORD=root
+      - SOPDS_DEBUG=True
+    ports:
+      - 8001:8001
+    restart: unless-stopped
+    depends_on:
+      - db
+    volumes:
+     - ${CONFDIR}:/config
+     - ${CONFDIR}/static:/static
+     - ~/Документы/Books:/books
+#
+  db:
+    image: ghcr.io/linuxserver/mariadb:latest
+#    container_name: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ${CONFDIR}/db:/config
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+      - ${CONFDIR}/static:/static
+      - ${CONFDIR}:/config
+    ports:
+      - 1337:80
+    depends_on:
+      - web

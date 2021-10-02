@@ -1,0 +1,15 @@
+.dockerignore
+.gitattributes
+.gitignore
+.project
+.pydevproject
+.travis.yml
+_config.yml
+
+**/__pycache__
+/static
+Dockerfile
+Pipfile
+Pipfile.lock
+TODO.txt
+raspberry.txt
