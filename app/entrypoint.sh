@@ -32,6 +32,15 @@ function init_db() {
     if [ ! -z $MYSQL_DB ]
     then
         #INIT MySQL
+        echo -n "Waiting for MySQL "
+        while [ "$(mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} --host ${MYSQL_HOST} -s ping)" != "mysqld is alive" -o \
+            "$(mysql -uroot -p${MYSQL_ROOT_PASSWORD} --host ${MYSQL_HOST} -se 'USE mysql;' 2>&1)" != "" ]
+        do
+            echo -n "."
+            sleep 10
+        done
+        echo -e "\nMySQL started"
+
         echo "**** Creating MySQL Databse. ****"
     	cat << EOF | mysql -uroot -p${MYSQL_ROOT_PASSWORD} --host ${MYSQL_HOST} mysql
 create database if not exists $MYSQL_DB default charset=utf8;
