@@ -8,5 +8,5 @@ db.sqlite3-journal
 .pydevproject
 
 **/__pycache__
-/static/*
+/static/
 

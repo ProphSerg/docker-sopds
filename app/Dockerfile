@@ -20,7 +20,7 @@ WORKDIR /sopds
 COPY . .
 
 RUN adduser --system --group --no-create-home app \
-    && mkdir -p /static /config/ /books \
+    && mkdir -p /static /config /books /sopds/tmp \
     && apt-get update \
     && apt-get -y update \
     && apt-get install -y unzip default-mysql-client python3-mysqldb \
@@ -35,7 +35,7 @@ RUN adduser --system --group --no-create-home app \
 #USER app
 
 VOLUME [ "/config", "/books" , "/static"]
-EXPOSE 8001
+#EXPOSE 8000
 
 ENTRYPOINT [ "/sopds/entrypoint.sh" ]
 CMD [ "start" ]
