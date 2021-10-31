@@ -35,7 +35,7 @@ RUN adduser --system --group --no-create-home app \
 #USER app
 
 VOLUME [ "/config", "/books" , "/static"]
-#EXPOSE 8000
+EXPOSE 8000
 
 ENTRYPOINT [ "/sopds/entrypoint.sh" ]
 CMD [ "start" ]
