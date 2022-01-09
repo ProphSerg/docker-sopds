@@ -17,7 +17,7 @@ ENV VERSION 0.47
 ENV TZ Asia/Omsk
 
 WORKDIR /sopds
-COPY . .
+COPY requirements.txt .
 
 RUN adduser --system --group --no-create-home app \
     && mkdir -p /static /config /books /sopds/tmp \
@@ -28,8 +28,10 @@ RUN adduser --system --group --no-create-home app \
     && apt-get -y clean \
 ##    && apt-get install -y bash libxml2 libxslt1.1 libffi7 libjpeg62-turbo zlib1g \
     && pip install --upgrade --no-cache-dir pip \
-    && pip install --no-cache-dir -r requirements.txt \
-    && chmod +x entrypoint.sh \
+    && pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+RUN chmod +x entrypoint.sh \
     && chown -R app:app . /config  /static /books
 
 #USER app

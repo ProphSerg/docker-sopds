@@ -13,18 +13,21 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+import django.urls
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import RedirectView
 from django.urls import reverse_lazy
+import os
 
 # from django.contrib.auth import logout
+BASE_URL = os.getenv('SOPDS_BASE_URL', '')
 
 urlpatterns = [
-    url(r'^opds/', include('opds_catalog.urls', namespace='opds')),
-    url(r'^web/', include('sopds_web_backend.urls', namespace='web')),
-    url(r'^admin/', admin.site.urls),
+    url(r'^%sopds/' % BASE_URL, include('opds_catalog.urls', namespace='opds')),
+    url(r'^%sweb/' % BASE_URL, include('sopds_web_backend.urls', namespace='web')),
+    url(r'^%sadmin/' % BASE_URL, admin.site.urls),
     #url(r'^logout/$', logout, {'next_page':'/web/'},name='logout'),   
     #url(r'^', include('sopds_web_backend.urls', namespace='web', app_name='opds_web_backend')),
-    url(r'^$', RedirectView.as_view(url=reverse_lazy("web:main"))),
+    url(r'^%s$' % BASE_URL, RedirectView.as_view(url=reverse_lazy("web:main"))),
 ]

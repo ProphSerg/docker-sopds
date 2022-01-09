@@ -19,7 +19,7 @@ services:
     depends_on:
       - db
     volumes:
-     - ${CONFDIR}:/config
+     - ${CONFDIR}/sopds:/config
      - ${CONFDIR}/static:/static
      - ~/Документы/Books:/books
 #
@@ -35,12 +35,14 @@ services:
     restart: unless-stopped
 
   nginx:
-    build:
-      context: ./nginx
+    #build:
+    #  context: ./nginx
+    image: nginx:latest
     volumes:
       - ${CONFDIR}/static:/static
-      - ${CONFDIR}:/config
+      - ${CONFDIR}/nginx:/etc/nginx/conf.d
     ports:
-      - 1337:80
+        - 1337:80
     depends_on:
       - web
+    restart: unless-stopped

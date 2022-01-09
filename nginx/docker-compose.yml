@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ${CONFDIR}/static/sopds:/static
+      - ${CONFDIR}/nginx:/etc/nginx/conf.d
+    ports:
+      - 1337:80
+    restart: unless-stopped

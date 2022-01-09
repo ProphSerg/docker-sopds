@@ -29,6 +29,7 @@ SECRET_KEY = os.getenv('SOPDS_SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('SOPDS_DEBUG', False)
+BASE_URL = os.getenv('SOPDS_BASE_URL', '')
 
 # ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = list(os.getenv('SOPDS_ALLOWED_HOSTS', '*').split(' '))
@@ -164,7 +165,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = "sopds"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_URL = '/static/'
+STATIC_URL = os.path.join('/', BASE_URL, 'static/')
 STATIC_ROOT = '/static'
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
